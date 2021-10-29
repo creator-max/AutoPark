@@ -28,14 +28,14 @@ namespace AutoPark
             };
 
             //3 task
-            VehicleHelper.PrintVehiclesOnConsole(vehicles);
+            VehicleHelper.PrintVehicles(vehicles);
 
             //4 task
             Console.WriteLine("\nSorting array...\n");
             Array.Sort(vehicles);
 
             //5 task
-            VehicleHelper.PrintVehiclesOnConsole(vehicles);
+            VehicleHelper.PrintVehicles(vehicles);
 
             //6 task
             Console.WriteLine($"\nVehicle with min mileage: {VehicleHelper.GetVehicleWithMinMileage(vehicles)}" +

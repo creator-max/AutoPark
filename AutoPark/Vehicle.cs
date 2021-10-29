@@ -4,6 +4,10 @@ namespace AutoPark
 {
     public class Vehicle : IComparable<Vehicle>
     {
+        private const double WeightCoefficient = 0.0013d;
+        private const double TaxCoefficient = 30d;
+        private const double TaxPerMonthAddition = 5d;
+
         public Vehicle() { }
 
         public Vehicle(VehicleType vehicleType,
@@ -34,8 +38,8 @@ namespace AutoPark
         public double Mileage { get; set; }
         public Color Color { get; set; }
 
-        public double GetCalcTaxPerMonth() => Weight * 0.0013 +
-            VehicleType.TaxCoefficient * 30 + 5;
+        public double GetCalcTaxPerMonth() => Weight * WeightCoefficient +
+            VehicleType.TaxCoefficient * TaxCoefficient + TaxPerMonthAddition;
 
         public override string ToString() => $"{Model}, {YearOfIssue}, " +
             $"{Weight}, {TankVolume}, {LicensePlat}, {Mileage}, " +
@@ -44,7 +48,7 @@ namespace AutoPark
         public int CompareTo(Vehicle other)
         {
             if (other != null)
-                return this.GetCalcTaxPerMonth().CompareTo(other.GetCalcTaxPerMonth());
+                return GetCalcTaxPerMonth().CompareTo(other.GetCalcTaxPerMonth());
             else
                 throw new ArgumentNullException(nameof(other));
         }

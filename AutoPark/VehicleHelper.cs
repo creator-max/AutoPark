@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AutoPark
 {
     public static class VehicleHelper
     {
-        public static Vehicle GetVehicleWithMinMileage(Vehicle[] vehicles)
+        public static Vehicle GetVehicleWithMinMileage(IReadOnlyList<Vehicle> vehicles)
         {
             var minMileageVehicle = vehicles[0];
             foreach (var vehicle in vehicles)
@@ -15,7 +16,7 @@ namespace AutoPark
             return minMileageVehicle;
         }
 
-        public static Vehicle GetVehicleWithMaxMileage(Vehicle[] vehicles)
+        public static Vehicle GetVehicleWithMaxMileage(IReadOnlyList<Vehicle> vehicles)
         {
             var maxMileageVehicle = vehicles[0];
             foreach (var vehicle in vehicles)
@@ -26,7 +27,7 @@ namespace AutoPark
             return maxMileageVehicle;
         }
 
-        public static void PrintVehiclesOnConsole(Vehicle[] vehicles)
+        public static void PrintVehicles(IReadOnlyList<Vehicle> vehicles)
         {
             foreach (var vehicle in vehicles)
             {
