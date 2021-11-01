@@ -11,6 +11,7 @@ namespace AutoPark
         public Vehicle() { }
 
         public Vehicle(VehicleType vehicleType,
+                Engine engine,
                 string model,
                 string licensePlat,
                 double weight,
@@ -19,6 +20,7 @@ namespace AutoPark
                 Color color,
                 double tankVolume)
         {
+            Engine = engine;
             VehicleType = vehicleType;
             Model = model;
             LicensePlat = licensePlat;
@@ -29,6 +31,7 @@ namespace AutoPark
             TankVolume = tankVolume;
         }
 
+        public Engine Engine { get; set; }
         public VehicleType VehicleType { get; }
         public string Model { get; }
         public ushort YearOfIssue { get; }
@@ -51,6 +54,17 @@ namespace AutoPark
                 return GetCalcTaxPerMonth().CompareTo(other.GetCalcTaxPerMonth());
             else
                 throw new ArgumentNullException(nameof(other));
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            if (!(obj is Vehicle other))
+                return false;
+
+            return VehicleType == other.VehicleType && Model == other.Model;
         }
     }
 }
