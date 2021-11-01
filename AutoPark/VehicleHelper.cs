@@ -34,5 +34,18 @@ namespace AutoPark
                 Console.WriteLine(vehicle);
             }
         }
+
+        public static void PrintEqualsVehicles(IReadOnlyList<Vehicle> vehicles)
+        {
+            for (int i = 0; i < vehicles.Count - 1; i++)
+            {
+                for (int j = i + 1; j < vehicles.Count; j++)
+                {
+                    if(vehicles[i].Equals(vehicles[j]))
+                        Console.WriteLine($"\nEquals:\n{vehicles[i]}\n{vehicles[j]}");
+                }
+            }   
+        }
+
     }
 }

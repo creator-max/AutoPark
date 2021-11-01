@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AutoPark
+﻿namespace AutoPark
 {
     class Program
     {
@@ -31,15 +29,7 @@ namespace AutoPark
             VehicleHelper.PrintVehicles(vehicles);
 
             //4 task
-            Console.WriteLine("\nSorting array...\n");
-            Array.Sort(vehicles);
-
-            //5 task
-            VehicleHelper.PrintVehicles(vehicles);
-
-            //6 task
-            Console.WriteLine($"\nVehicle with min mileage: {VehicleHelper.GetVehicleWithMinMileage(vehicles)}" +
-                $"\nVehicle with max mileage: {VehicleHelper.GetVehicleWithMaxMileage(vehicles)}");
+            VehicleHelper.PrintEqualsVehicles(vehicles);
         }
     }
 }
