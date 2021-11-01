@@ -61,10 +61,7 @@ namespace AutoPark
             if (obj == null)
                 return false;
 
-            if (!(obj is Vehicle other))
-                return false;
-
-            return VehicleType == other.VehicleType && Model == other.Model;
+            return obj is Vehicle other && VehicleType == other.VehicleType && Model == other.Model;
         }
     }
 }
