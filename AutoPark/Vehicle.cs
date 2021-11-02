@@ -58,9 +58,6 @@ namespace AutoPark
 
         public override bool Equals(object obj)
         {
-            if (obj == null)
-                return false;
-
             return obj is Vehicle other && VehicleType == other.VehicleType && Model == other.Model;
         }
     }

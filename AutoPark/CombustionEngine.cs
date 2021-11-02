@@ -8,8 +8,8 @@
         {
 
         }
-        public double EngineCompacityInCubCM { get; private protected set; }
-        public double FuelConsumptionPer100 { get; private protected set; }
+        public double EngineCompacityInCubCM { get; protected set; }
+        public double FuelConsumptionPer100 { get; protected set; }
 
         public double GetMaxKilometers(double fuelTankCapacity)
             => fuelTankCapacity / FuelConsumptionPer100 * CoefficientFuelConsumption;
