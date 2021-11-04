@@ -30,14 +30,14 @@ namespace AutoPark
         public static Vehicle GetVehicleWithMaxKilometers(IReadOnlyList<Vehicle> vehicles)
         {
             var maxKilometersVehicle = vehicles[0];
-            var maxKilometers = vehicles[0].TankVolume;
+            var maxKilometers = vehicles[0].Engine.GetMaxKilometers(vehicles[0].TankVolume);
             
             foreach(var vehicle in vehicles)
             {
                 if (vehicle.Engine.GetMaxKilometers(vehicle.TankVolume) > maxKilometers)
                 {
                     maxKilometersVehicle = vehicle;
-                    maxKilometers = vehicle.TankVolume;
+                    maxKilometers = vehicle.Engine.GetMaxKilometers(vehicle.TankVolume);
                 }
             }
             return maxKilometersVehicle;
