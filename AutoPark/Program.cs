@@ -1,4 +1,6 @@
-﻿namespace AutoPark
+﻿using System;
+
+namespace AutoPark
 {
     class Program
     {
@@ -29,7 +31,7 @@
             VehicleHelper.PrintVehicles(vehicles);
 
             //4 task
-            VehicleHelper.PrintEqualsVehicles(vehicles);
+            Console.WriteLine(VehicleHelper.GetVehicleWithMaxKilometers(vehicles));
         }
     }
 }
