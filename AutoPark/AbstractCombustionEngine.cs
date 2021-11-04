@@ -1,9 +1,9 @@
 ﻿namespace AutoPark
 {
-    public class CombustionEngine : Engine
+    public abstract class AbstractCombustionEngine : AbstractEngine
     {
         private const double CoefficientFuelConsumption = 100d;
-        public CombustionEngine(string typeName, double taxCoefficient)
+        public AbstractCombustionEngine(string typeName, double taxCoefficient)
             : base(typeName, taxCoefficient)
         {
 
@@ -11,7 +11,7 @@
         public double EngineCompacityInCubCM { get; protected set; }
         public double FuelConsumptionPer100 { get; protected set; }
 
-        public double GetMaxKilometers(double fuelTankCapacity)
+        public override double GetMaxKilometers(double fuelTankCapacity)
             => fuelTankCapacity / FuelConsumptionPer100 * CoefficientFuelConsumption;
     }
 }
