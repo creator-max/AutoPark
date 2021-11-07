@@ -11,7 +11,7 @@ namespace AutoPark
         public Vehicle() { }
 
         public Vehicle(VehicleType vehicleType,
-                Engine engine,
+                AbstractEngine engine,
                 string model,
                 string licensePlat,
                 double weight,
@@ -31,7 +31,7 @@ namespace AutoPark
             TankVolume = tankVolume;
         }
 
-        public Engine Engine { get; set; }
+        public AbstractEngine Engine { get; set; }
         public VehicleType VehicleType { get; }
         public string Model { get; }
         public ushort YearOfIssue { get; }

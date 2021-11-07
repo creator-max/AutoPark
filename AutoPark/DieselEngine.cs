@@ -1,6 +1,6 @@
 ﻿namespace AutoPark
 {
-    public class DieselEngine : CombustionEngine
+    public class DieselEngine : AbstractCombustionEngine
     {
         public DieselEngine(double engineCompacityInCubCM, double fuelConsumptionPer100)
             : base("Diesel", 1.2d)
