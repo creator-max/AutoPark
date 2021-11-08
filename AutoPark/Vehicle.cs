@@ -32,10 +32,11 @@ namespace AutoPark
             Mileage = mileage;
             Color = color;
             TankVolume = tankVolume;
+            ListRent = new List<Rent>();
         }
 
         public int Id { get; }
-        public List<Rent> ListRent { get; }
+        public List<Rent> ListRent { get; set; }
         public AbstractEngine Engine { get; }
         public VehicleType VehicleType { get; }
         public string Model { get; }
