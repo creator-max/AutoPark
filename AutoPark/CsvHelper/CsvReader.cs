@@ -1,6 +1,7 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AutoPark.CsvHelper
 {
@@ -15,20 +16,38 @@ namespace AutoPark.CsvHelper
         public List<List<string>> Read()
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            using (var parser = new TextFieldParser(FilePath, Encoding.GetEncoding(1251)))
+            using (var sr = new StreamReader(FilePath, Encoding.GetEncoding(1251)))
             {
-                parser.TextFieldType = FieldType.Delimited;
-                parser.SetDelimiters(",");
-
                 var listResult = new List<List<string>>();
-                while (!parser.EndOfData)
+
+                string line;
+                while ((line = sr.ReadLine()) != null)
                 {
-                    var fields = new List<string>(parser.ReadFields());
-                    listResult.Add(fields);
+                    listResult.Add(ParseString(line));
                 }
                 return listResult;
             }
-            
+
+        }
+
+        private List<string> ParseString(string str)
+        {
+            var fields = new List<string>();
+
+            var splitString = Regex.Replace(
+                    str,
+                    "\"" + @"(?<firstNum>\d+)\,(?<secondNum>\d+)" + "\"",
+                    "${firstNum}.${secondNum}")
+                    .Split(',');
+
+            foreach(var field in splitString)
+            {
+                fields.Add(Regex.Replace(
+                    field,
+                    @"(?<firstNum>\d+)\.(?<secondNum>\d+)",
+                    "${firstNum},${secondNum}"));
+            }
+            return fields;
         }
     }
 }
