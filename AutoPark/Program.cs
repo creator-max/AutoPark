@@ -1,10 +1,13 @@
-﻿namespace AutoPark
+﻿using System;
+using System.IO;
+
+namespace AutoPark
 {
     class Program
     {
         static void Main()
         {
-            const string path = @"C:\Users\ASUS\source\repos\AutoPark\AutoPark\Data\";
+            string path = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\Data\"));
             var collections = new Collections(
                     $"{path}types.csv", 
                     $"{path}vehicles.csv", 
@@ -14,8 +17,8 @@
             collections.Print();
 
             //2 task
-            var vehicle = new Vehicle(1, collections.ListVehicleType[0], new GasolineEngine(2d, 8.1d), "Volkswagen Crafter", "5427 AX-7", 2022d, 2015, 376000d, Color.Blue, 500d);
-            collections.Insert(collections.ListVehicle.Count - 1, vehicle);
+            var vehicle = new Vehicle(1, collections.VehicleTypes[0], new GasolineEngine(2d, 8.1d), "Volkswagen Crafter", "5427 AX-7", 2022d, 2015, 376000d, Color.Blue, 500d);
+            collections.Insert(collections.Vehicles.Count - 1, vehicle);
 
             //3 task
             collections.Delete(1);

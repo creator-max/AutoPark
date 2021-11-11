@@ -9,40 +9,40 @@ namespace AutoPark
     {
         public Collections(string typesPath, string vehiclesPath, string rentsPath)
         {
-            ListVehicleType = LoadTypes(typesPath);
-            ListVehicle = LoadVehicles(vehiclesPath);
+            VehicleTypes = ParseTypes(typesPath);
+            Vehicles = ParseVehicles(vehiclesPath);
             LoadRents(rentsPath);
         }
 
-        public List<VehicleType> ListVehicleType { get; }
-        public List<Vehicle> ListVehicle { get; }        
+        public List<VehicleType> VehicleTypes { get; }
+        public List<Vehicle> Vehicles { get; }        
 
         public void Insert(int index, Vehicle vehicle)
         {
-            if (index >= 0 && index < ListVehicle.Count)
+            if (index >= 0 && index < Vehicles.Count)
             {
-                ListVehicle.Insert(index, vehicle);
+                Vehicles.Insert(index, vehicle);
             }
             else
             {
-                ListVehicle.Add(vehicle);
+                Vehicles.Add(vehicle);
             }
         }
 
         public int Delete(int index)
         {
-            if (index < 0 || index >= ListVehicle.Count)
+            if (index < 0 || index >= Vehicles.Count)
             {
                 return -1;
             }
-            ListVehicle.RemoveAt(index);
+            Vehicles.RemoveAt(index);
             return index;
         }
 
         public double SumTotalProfit()
         {
             var profit = 0d;
-            foreach(var vehicle in ListVehicle)
+            foreach(var vehicle in Vehicles)
             {
                 profit += vehicle.GetTotalProfit();
             }
@@ -51,7 +51,7 @@ namespace AutoPark
 
         public void Sort(IComparer<Vehicle> comparator)
         {
-            ListVehicle.Sort(comparator);
+            Vehicles.Sort(comparator);
         }
 
         public void Print()
@@ -63,7 +63,7 @@ namespace AutoPark
                 $"{"Tax",-10}{"Profit",-10}");
 
 
-            foreach (var vehicle in ListVehicle)
+            foreach (var vehicle in Vehicles)
             {
                 Console.WriteLine(
                     $"{vehicle.Id,-5}" +
@@ -94,7 +94,7 @@ namespace AutoPark
             return vehicleType;
         }
 
-        private List<VehicleType> LoadTypes(string typesCsvPath)
+        private List<VehicleType> ParseTypes(string typesCsvPath)
         {
             try
             {
@@ -125,7 +125,7 @@ namespace AutoPark
             var id = int.Parse(fields[0]);
 
             var vehicleTypeId = int.Parse(fields[1]);
-            var vehicleType = ListVehicleType[vehicleTypeId];
+            var vehicleType = VehicleTypes[vehicleTypeId];
 
             var model = fields[2];
             var licensePlat = fields[3];
@@ -150,7 +150,7 @@ namespace AutoPark
             return vehicle;
         }
 
-        private List<Vehicle> LoadVehicles(string vehiclesCsvPath)
+        private List<Vehicle> ParseVehicles(string vehiclesCsvPath)
         {
             try
             {
@@ -188,7 +188,7 @@ namespace AutoPark
                     var date = DateTime.Parse(fields[1]);
                     var cost = double.Parse(fields[2]);
 
-                    foreach (var vehicle in ListVehicle)
+                    foreach (var vehicle in Vehicles)
                     {
                         if (vehicle.Id == vehicleId)
                         {
