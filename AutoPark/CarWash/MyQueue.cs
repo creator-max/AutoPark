@@ -39,7 +39,7 @@ namespace AutoPark.CarWash
 
         }
 
-        public int Count { get; set; }
+        public int Count { get; private set; }
 
         public void Enqueue(T item)
         {
