@@ -73,7 +73,6 @@ namespace AutoPark.CarWash
         public void Clear()
         {
             Array.Clear(_queue, 0, _queue.Length);
-            Count = 0;
         }
 
         public bool Contains(T item)
