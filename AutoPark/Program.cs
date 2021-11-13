@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using AutoPark.CarWash;
+using AutoPark.Garage;
 
 namespace AutoPark
 {
@@ -15,19 +16,19 @@ namespace AutoPark
                     $"{path}rents.csv");
 
             var vehicles = collections.Vehicles;
-            var washQueue = new MyQueue<Vehicle>(vehicles.Count);
+            var garageStack = new MyStack<Vehicle>(vehicles.Count);
 
             foreach(var vehicle in vehicles)
             {
-                washQueue.Enqueue(vehicle);
-                Console.WriteLine($"{vehicle.Model} ({vehicle.LicensePlat}) arrived at the wash.");
+                garageStack.Push(vehicle);
+                Console.WriteLine($"{vehicle.Model} ({vehicle.LicensePlat}) arrived at the garage.");
             }
 
             Console.WriteLine();
-            while(washQueue.Count > 0)
+            while(garageStack.Count > 0)
             {
-                var vehicle = washQueue.Dequeue();
-                Console.WriteLine($"{vehicle.Model} ({vehicle.LicensePlat}) was washed.");
+                var vehicle = garageStack.Pop();
+                Console.WriteLine($"{vehicle.Model} ({vehicle.LicensePlat}) drove out from the garage.");
             }
         }
     }
