@@ -7,7 +7,7 @@ namespace AutoPark
     {
         static void Main()
         {
-            string path = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\Data\"));
+            string path = $@"{Directory.GetCurrentDirectory()}\Data\";
             var collections = new Collections(
                     $"{path}types.csv", 
                     $"{path}vehicles.csv", 
