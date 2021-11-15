@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AutoPark
 {
@@ -10,7 +11,8 @@ namespace AutoPark
 
         public Vehicle() { }
 
-        public Vehicle(VehicleType vehicleType,
+        public Vehicle(int id,
+                VehicleType vehicleType,
                 AbstractEngine engine,
                 string model,
                 string licensePlat,
@@ -20,6 +22,7 @@ namespace AutoPark
                 Color color,
                 double tankVolume)
         {
+            Id = id;
             Engine = engine;
             VehicleType = vehicleType;
             Model = model;
@@ -29,9 +32,12 @@ namespace AutoPark
             Mileage = mileage;
             Color = color;
             TankVolume = tankVolume;
+            ListRent = new List<Rent>();
         }
 
-        public AbstractEngine Engine { get; set; }
+        public int Id { get; }
+        public List<Rent> ListRent { get; set; }
+        public AbstractEngine Engine { get; }
         public VehicleType VehicleType { get; }
         public string Model { get; }
         public ushort YearOfIssue { get; }
@@ -43,6 +49,18 @@ namespace AutoPark
 
         public double GetCalcTaxPerMonth() => Weight * WeightCoefficient +
             VehicleType.TaxCoefficient * TaxCoefficient + TaxPerMonthAddition;
+
+        public double GetTotalIncome()
+        {
+            var sum = 0d;
+            foreach(var rent in ListRent)
+            {
+                sum += rent.Price;
+            }
+            return sum;
+        }
+
+        public double GetTotalProfit() => GetTotalIncome() - GetCalcTaxPerMonth();
 
         public override string ToString() => $"{Model}, {YearOfIssue}, " +
             $"{Weight}, {TankVolume}, {LicensePlat}, {Mileage}, " +
