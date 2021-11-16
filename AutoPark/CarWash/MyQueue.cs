@@ -7,7 +7,6 @@ namespace AutoPark.CarWash
     public class MyQueue<T> : IEnumerable<T>
     {
         private const int DefaultSize = 10;
-        private int _firstIndex;
         private int _lastIndex;
         private T[] _queue;
 
@@ -36,26 +35,20 @@ namespace AutoPark.CarWash
             {
                 Enqueue(item);
             }
-
         }
 
-        public int Count { get; private set; }
+        public int Count => _lastIndex;
 
         public void Enqueue(T item)
         {
             if(Count == _queue.Length)
             {
-                SetCapacity(_queue.Length * 2);
+                var newSize = _queue.Length + DefaultSize;
+                var newQueue = new T[newSize];
+                Array.Copy(_queue, newQueue, _queue.Length);
+                _queue = newQueue;
             }
-            if(Count == 0)
-            {
-                _queue[_lastIndex] = item;
-            }
-            else
-            {
-                _queue[++_lastIndex] = item;
-            }
-            Count++;
+            _queue[_lastIndex++] = item; 
         }
 
         public T Dequeue()
@@ -64,21 +57,22 @@ namespace AutoPark.CarWash
             {
                 throw new InvalidOperationException();
             }
-            var dequeueItem = _queue[_firstIndex];
-            _firstIndex++;
-            Count--;
+            var dequeueItem = _queue[0];
+            var newQueue = new T[_queue.Length - 1];
+            Array.Copy(_queue, 1, newQueue, 0, --_lastIndex);
+            _queue = newQueue;
             return dequeueItem;
         }
 
         public void Clear()
         {
             Array.Clear(_queue, 0, _queue.Length);
-            Count = 0;
+            _lastIndex = 0;
         }
 
         public bool Contains(T item)
         {
-            for(int i = _firstIndex; i <= _lastIndex; i++)
+            for(int i = 0; i < _lastIndex; i++)
             {
                 if (_queue[i].Equals(item))
                 {
@@ -90,27 +84,12 @@ namespace AutoPark.CarWash
 
         public IEnumerator<T> GetEnumerator()
         {
-            var i = _firstIndex;
-
-            while(i <= _lastIndex)
+            for (int i = 0; i < _lastIndex; i++)
             {
-                yield return _queue[i++];
+                yield return _queue[i];
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        private void SetCapacity(int capacity)
-        {
-            if (_queue == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            var newQueue = new T[capacity];
-
-            Array.Copy(_queue, newQueue, _queue.Length);
-            _queue = newQueue;
-        }
     }
 }
