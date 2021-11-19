@@ -7,7 +7,6 @@ namespace AutoPark.Garage
     public class MyStack<T> : IEnumerable<T>
     {
         private const int DefaultSize = 10;
-        private int _headIndex;
         private T[] _stack;
 
         public MyStack()
@@ -17,10 +16,9 @@ namespace AutoPark.Garage
 
         public MyStack(IEnumerable<T> collection)
         {
-            if (collection == null)
-            {
-                throw new ArgumentNullException();
-            }
+            if (collection is null)
+                throw new ArgumentNullException(nameof(collection), "Collection can't be empty.");
+            
             _stack = new T[DefaultSize];
             foreach (var item in collection)
             {
@@ -31,13 +29,12 @@ namespace AutoPark.Garage
         public MyStack(int size)
         {
             if(size <= 0)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
+                throw new ArgumentOutOfRangeException(nameof(size), "Stack size can't be <= 0.");
+            
             _stack = new T[size];
         }
 
-        public int Count => _headIndex;
+        public int Count { get; private set; }
 
         public void Push(T item)
         {
@@ -47,31 +44,26 @@ namespace AutoPark.Garage
                 Array.Copy(_stack, newStack, _stack.Length);
                 _stack = newStack;
             }
-            _stack[_headIndex++] = item;
+            _stack[Count++] = item;
         }
 
         public T Pop()
         {
             if(Count == 0)
-            {
-                throw new InvalidOperationException();
-            }
-            var popItem = _stack[_headIndex - 1];
-            var newStack = new T[_stack.Length - 1];
-            Array.Copy(_stack, newStack, --_headIndex);
-            _stack = newStack;
-            return popItem;
+                throw new InvalidOperationException("Can't apply operation Pop() to stack with 0 elements.");
+
+            return _stack[--Count];
         }
 
         public void Clear()
         {
             Array.Clear(_stack, 0, _stack.Length);
-            _headIndex = 0;
+            Count = 0;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            for (int i = 0; i < _headIndex; i++)
+            for (int i = 0; i < Count; i++)
             {
                 yield return _stack[i];
             }
