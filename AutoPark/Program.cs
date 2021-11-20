@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using AutoPark.CarWash;
+using AutoPark.Garage;
 
 namespace AutoPark
 {
@@ -9,29 +11,26 @@ namespace AutoPark
         {
             string path = $@"{Directory.GetCurrentDirectory()}\Data\";
             var collections = new Collections(
-                    $"{path}types.csv", 
-                    $"{path}vehicles.csv", 
+                    $"{path}types.csv",
+                    $"{path}vehicles.csv",
                     $"{path}rents.csv");
 
-            //1 task
-            collections.Print();
+            var vehicles = collections.Vehicles;
 
-            //2 task
-            var vehicle = new Vehicle(1, collections.VehicleTypes[0], new GasolineEngine(2d, 8.1d), "Volkswagen Crafter", "5427 AX-7", 2022d, 2015, 376000d, Color.Blue, 500d);
-            collections.Insert(collections.Vehicles.Count - 1, vehicle);
+            var garage = new MyStack<Vehicle>(vehicles.Count);
 
-            //3 task
-            collections.Delete(1);
-            collections.Delete(4);
+            foreach (var vehicle in vehicles)
+            {
+                garage.Push(vehicle);
+                Console.WriteLine($"{vehicle.Model} ({vehicle.LicensePlat}) arrived at the garage.");
+            }
 
-            //4 task
-            collections.Print();
-
-            //5 task
-            collections.Sort(new VehicleComparer());
-
-            //6 task
-            collections.Print();
+            Console.WriteLine();
+            while (garage.Count > 0)
+            {
+                var vehicle = garage.Pop();
+                Console.WriteLine($"{vehicle.Model} ({vehicle.LicensePlat}) left the garage.");
+            }
         }
     }
 }
