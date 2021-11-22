@@ -5,36 +5,36 @@ using System.IO;
 
 namespace AutoPark.CarRepair
 {
-    public class Orders
+    public class OrderService
     {
         private List<string> _details;
 
-        public Orders(string ordersPath)
+        public OrderService(string ordersPath)
         {
             _details = new List<string>();
-            OrdersCount = new Dictionary<string, int>();
+            Orders = new Dictionary<string, int>();
             LoadOrders(ordersPath);
         }
 
-        public Dictionary<string, int> OrdersCount { get; private set; }
+        public Dictionary<string, int> Orders { get; private set; }
 
         public void Print()
         {
-            foreach(var (key, value) in OrdersCount)
+            foreach(var (key, value) in Orders)
             {
                 Console.WriteLine($"{key, -7}:{value, 3}шт.");
             }
         }
 
-        public void AddOrder(string detail)
+        private void AddOrder(string detail)
         {
-            if (OrdersCount.ContainsKey(detail))
+            if (Orders.ContainsKey(detail))
             {
-                OrdersCount[detail]++;
+                Orders[detail]++;
             }
             else
             {
-                OrdersCount.Add(detail, 1);
+                Orders.Add(detail, 1);
             }
         }
 

@@ -9,7 +9,7 @@ namespace AutoPark
         {
             string path = $@"{AppContext.BaseDirectory}\Data\";
 
-            var orders = new Orders($"{path}orders.csv");
+            var orders = new OrderService($"{path}orders.csv");
             orders.Print();
         }
     }
