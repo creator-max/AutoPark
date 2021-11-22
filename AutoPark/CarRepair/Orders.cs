@@ -20,9 +20,9 @@ namespace AutoPark.CarRepair
 
         public void Print()
         {
-            foreach(var key in OrdersCount.Keys)
+            foreach(var (key, value) in OrdersCount)
             {
-                Console.WriteLine($"{key, -7}:{OrdersCount[key], 3}шт.");
+                Console.WriteLine($"{key, -7}:{value, 3}шт.");
             }
         }
 
