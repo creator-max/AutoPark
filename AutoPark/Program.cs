@@ -1,7 +1,5 @@
-﻿using System;
-using System.IO;
-using AutoPark.CarWash;
-using AutoPark.Garage;
+using System;
+using AutoPark.CarRepair;
 
 namespace AutoPark
 {
@@ -9,28 +7,10 @@ namespace AutoPark
     {
         static void Main()
         {
-            string path = $@"{Directory.GetCurrentDirectory()}\Data\";
-            var collections = new Collections(
-                    $"{path}types.csv",
-                    $"{path}vehicles.csv",
-                    $"{path}rents.csv");
+            string path = $@"{AppContext.BaseDirectory}\Data\";
 
-            var vehicles = collections.Vehicles;
-
-            var garage = new MyStack<Vehicle>(vehicles.Count);
-
-            foreach (var vehicle in vehicles)
-            {
-                garage.Push(vehicle);
-                Console.WriteLine($"{vehicle.Model} ({vehicle.LicensePlat}) arrived at the garage.");
-            }
-
-            Console.WriteLine();
-            while (garage.Count > 0)
-            {
-                var vehicle = garage.Pop();
-                Console.WriteLine($"{vehicle.Model} ({vehicle.LicensePlat}) left the garage.");
-            }
+            var orders = new OrderService($"{path}orders.csv");
+            orders.Print();
         }
     }
 }
